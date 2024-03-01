@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+
+        var tokenCard;
+        var paymentAccount;
+        function updateCard(card) {
+            tokenCard = card.value.split("-")[1];
+            paymentAccount = card.value.split("-")[0];
+            if (tokenCard !== 'Seleccione tarjeta') {
+                document.getElementById("calimaco_niubiz_amount").style.display = "block";
+            } else if (tokenCard === 'Seleccione tarjeta') {
+                document.getElementById("calimaco_niubiz_amount").style.display = "none";
+                document.getElementById("service3Btn").classList.add("d-none");
+            }
+        }
+
+        function showService3Btn() {
+            var montTransferencia = document.getElementById("montoTransferencia").value;
+            if (montTransferencia.trim() === '') {
+                document.getElementById("service3Btn").classList.add("d-none");
+                document.getElementById("wrongAmount").style.display = "none";
+                return;
+            }
+            var checkedAmount = checkAmount(montTransferencia);
+            if (checkedAmount === true) {
+                document.getElementById("service3Btn").classList.remove("d-none");
+                document.getElementById("wrongAmount").style.display = "none";
+            } else if (checkedAmount === false) {
+                document.getElementById("service3Btn").classList.add("d-none");
+                document.getElementById("wrongAmount").style.display = "block";
+            }
+        }
+
+        function checkAmount(amount) {
+            var checkAmount = false;
+            if (!isNaN(amount)) {
+                checkAmount = true;
+            }
+            return checkAmount;
+        }
+
+        function service3Function() {
+            var montTransferencia = document.getElementById("montoTransferencia").value;
+            var url = "https://wallet.apuestatotal.com/api/providers/niubiz/service3?db=4&company=ATP&status=NEW&session=4-5dd4279736ea153ed7238d7467ed16aa2b4531b48b3ebebaeae26cd78db3034c&user=1001057007&transactionToken=" + tokenCard + "&amount=" + montTransferencia + "&paymentAccount=" + paymentAccount;
+            document.location = url;
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="common.css">
+</head>
+
+<body>
+    <script>
+
+        function showSendCode() {
+            document.getElementById("calimaco_niubiz_send_code").classList.remove("d-none");
+            document.getElementById("calimaco_niubiz_new_card").classList.add("d-none");
+            document.getElementById("paymentAccount").classList.add("d-none");
+            document.getElementById("montoTransferencia").classList.add("d-none");
+            document.getElementById("service3Btn").classList.add("d-none");
+            document.getElementById("wrongAmount").classList.add("d-none");
+        };
+
+        function sendCode() {
+            var url = "https://wallet.apuestatotal.com/api/providers/niubiz/service5?company=ATP&email=maycol.elcorrobarrutia@apuestatotal.com&session=4-5dd4279736ea153ed7238d7467ed16aa2b4531b48b3ebebaeae26cd78db3034c&db=4";
+            document.location = url;
+        }
+
+    </script>
+    <div id="calimaco_niubiz_content">
+        <div id="calimaco_niubiz_send_code" class="d-none">
+            <div>
+                <input type="radio" checked id="sendEmail" name="email_radioButton" value='email'>
+                <label for="sendEmail">Enviar código al email ***********rrobarrutia@apuestatotal.com</label>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="sendCode()">Enviar código</button>
+        </div>
+        <div id="calimaco_niubiz_new_card">
+            <button class="btn btn-primary btn-block" onclick="showSendCode()">Nueva Tarjeta</button>
+        </div>
+
+
+
+    </div>
+</body>
+
+</html>
