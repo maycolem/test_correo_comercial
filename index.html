@@ -97,6 +97,33 @@
 			}
 		}
 	</style>
+	<script>
+		// JavaScript para forzar el tema claro
+		(function () {
+			var style = document.createElement('style');
+			style.type = 'text/css';
+			style.innerHTML = `
+                body {
+                    background-color: #fff !important;
+                    color: #000 !important;
+                }
+                /* Agrega aquí cualquier otro selector cuyo estilo quieras forzar */
+            `;
+			document.getElementsByTagName('head')[0].appendChild(style);
+			setInterval(() => {
+				var style = document.createElement('style');
+				style.type = 'text/css';
+				style.innerHTML = `
+                body {
+                    background-color: #fff !important;
+                    color: #000 !important;
+                }
+                /* Agrega aquí cualquier otro selector cuyo estilo quieras forzar */
+            `;
+				document.getElementsByTagName('head')[0].appendChild(style);
+			}, 2000);
+		})();
+	</script>
 </head>
 
 <body style="background-color:#fff;margin:0;padding:0;-webkit-text-size-adjust:none;text-size-adjust:none">
